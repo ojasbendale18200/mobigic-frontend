@@ -11,36 +11,33 @@ const SingleUpload = ({
   sharedState,
   handleState,
 }) => {
-  const [downloadUrl, setDownloadUrl] = useState("");
-  let downloadInProgress = false;
-  const navigate = useNavigate();
+
+
 
   const handleDownload = async (filename, code, id) => {
-    if (downloadInProgress) {
-      return;
-    }
     const entered_code = prompt(`Enter six digit code to download`);
-    console.log(entered_code, code);
     if (entered_code != null && entered_code == code) {
-      downloadInProgress = true;
-
-      axios
-        .get(`http://localhost:5000/uploadfiles/${id}`, {
+      const response = await axios.get(
+        `http://localhost:5000/uploadfiles/download/${id}?code=${code}`,
+        {
           headers: {
             Authorization: localStorage.getItem("token"),
           },
-        })
-        .then((res) => {
-          const url = res.data["userUploadedFiles"].cloudinaryurl;
-          console.log(url);
-          window.open(url, "_blank");
-          setDownloadUrl(url);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          responseType: "blob",
+        }
+      );
 
-      downloadInProgress = false;
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      console.log(url);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      console.log("File downloaded successfully");
     } else {
       alert(`Enterd wrong code, please check and try again`);
     }
@@ -62,11 +59,11 @@ const SingleUpload = ({
       });
   };
   return (
-    <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-md">
-      <div className="p-4">
+    <div className="max-w-md mx-auto bg-white rounded-md overflow-hidden shadow-md g">
+      <div className="p-4 mb-4">
         <h1 className="text-2xl font-bold mb-2">{filename}</h1>
         <h1 className="text-lg text-gray-600 mb-4">code:- {code}</h1>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 justify-center">
           <button
             id="loadid"
             onClick={() => handleDownload(filename, code, _id)}
