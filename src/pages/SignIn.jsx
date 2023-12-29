@@ -16,7 +16,7 @@ const SignIn = () => {
       const payload = { username, password };
 
       axios
-        .post(`http://localhost:5000/auth/login`, payload)
+        .post(`https://mobigic-1p0g.onrender.com/auth/login`, payload)
         .then((res) => {
           if (res.data.token) {
             console.log(res.data);

@@ -13,7 +13,7 @@ const UserInfo = () => {
 
   const getData = () => {
     axios
-      .get(`http://localhost:5000/uploadfiles/`, {
+      .get(`https://mobigic-1p0g.onrender.com/uploadfiles/`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

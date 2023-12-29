@@ -22,7 +22,7 @@ const SignUp = () => {
       };
 
       await axios
-        .post(`http://localhost:5000/auth/register`, payload)
+        .post(`https://mobigic-1p0g.onrender.com/auth/register`, payload)
         .then((res) => {
           alert("Registration Successful");
           navigate("/signin");

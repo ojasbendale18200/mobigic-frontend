@@ -18,7 +18,7 @@ const SingleUpload = ({
     const entered_code = prompt(`Enter six digit code to download`);
     if (entered_code != null && entered_code == code) {
       const response = await axios.get(
-        `http://localhost:5000/uploadfiles/download/${id}?code=${code}`,
+        `https://mobigic-1p0g.onrender.com/uploadfiles/download/${id}?code=${code}`,
         {
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -45,7 +45,7 @@ const SingleUpload = ({
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/uploadfiles/delete/${id}`, {
+      .delete(`https://mobigic-1p0g.onrender.com/uploadfiles/delete/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
         },

@@ -13,7 +13,7 @@ const Upload = ({ sharedState, handleState }) => {
       console.log(payload);
 
       axios
-        .post(`http://localhost:5000/uploadfiles/upload`, payload, {
+        .post(`https://mobigic-1p0g.onrender.com/uploadfiles/upload`, payload, {
           headers: {
             Authorization: localStorage.getItem("token"),
             "Content-Type": "multipart/form-data",
